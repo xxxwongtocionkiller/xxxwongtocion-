@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DarkX Hacking Assistant</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <style>
+        /* Styling ya jumla */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #36393f;
+            color: #dcddde;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+            align-items: center; /* Center button horizontally */
+        }
+
+        /* Kontena la kitufe cha Start */
+        .start-button-container {
+            display: flex;
+            justify-content: center; /* Center button content horizontally */
+            align-items: center; /* Center button content vertically */
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* Kitufe cha Start */
+        .start-button {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-image: url('https://i.ibb.co/gFcYq33x/1755435792457.jpg');
+            background-size: cover;
+            background-position: center;
+            cursor: pointer;
+            border: none;
+            outline: none;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .start-button:hover {
+            transform: scale(1.05);
+        }
+
+        /* Kontena kwa ajili ya kiolesura chote cha chat */
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            width: 100%; /* Fanya container ya chat ichukue upana wote */
+            max-width: 600px; /* Weka upana wa juu kwa ajili ya muonekano mzuri kwenye skrini kubwa */
+            box-sizing: border-box; /* Hakikisha padding na border haziongezi upana halisi */
+        }
+
+        /* Navigaton bar ya juu */
+        .top-nav {
+            background-color: #2f3136;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #282b30;
+        }
+
+        .chat-title {
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.125rem;
+        }
+
+        .chat-icon {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+            overflow: hidden;
+            background-color: #5865f2;
+        }
+
+        .chat-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Eneo la ujumbe */
+        .messages-area {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Styling ya ujumbe mmoja mmoja */
+        .message-row {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .message-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+            margin-right: 15px;
+            overflow: hidden;
+            background-color: #5865f2;
+        }
+
+        .message-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .message-content {
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            word-wrap: break-word;
+            max-width: 80%;
+            line-height: 1.4;
+        }
+
+        /* Styling ya ujumbe wa mtumiaji */
+        .user-message {
+            justify-content: flex-end;
+            margin-left: auto;
+        }
+
+        .user-message .message-icon {
+            display: none;
+        }
+
+        .user-message .message-content {
+            background-color: #5865f2;
+            color: white;
+        }
+
+        /* Styling ya ujumbe wa AI */
+        .ai-message {
+            justify-content: flex-start;
+        }
+
+        .ai-message .message-content {
+            background-color: #40414f;
+            color: #dcddde;
+        }
+
+        /* Eneo la kuingiza na kifungo cha kutuma */
+        .input-area {
+            padding: 1rem;
+            display: flex;
+            background-color: #40414f;
+            border-top: 1px solid #2f3136;
+        }
+
+        #message-input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 1px solid #4d4d4d;
+            border-radius: 0.5rem;
+            background-color: #40414f;
+            color: #dcddde;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        #message-input:focus {
+            border-color: #8b5cf6;
+        }
+
+        #send-button {
+            margin-left: 1rem;
+            background-color: #5865f2;
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        #send-button:hover {
+            background-color: #4752c4;
+        }
+
+        /* Styling ya scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #2f3136;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #4d4d4d;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #6a768d;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="start-button-container">
+        <div class="start-button" onclick="startGame()"></div>
+    </div>
+
+    <div class="chat-container">
+        <div class="top-nav">
+            <div class="chat-title">
+                <div class="chat-icon">
+                    <img src="https://i.ibb.co/gFcYq33x/1755435792457.jpg" alt="DarkX Logo">
+                </div>
+                <span>DarkX Hacking Assistant</span>
+            </div>
+        </div>
+
+        <div class="messages-area" id="messages-area">
+            <div class="message-row ai-message">
+                <div class="message-icon">
+                    <img src="https://assets-global.website-files.com/6257adef93867e50d84d30e2/636e0a6cc3370f19a6cd81d9_icon_clyde_blurple_rgb.png" alt="Discord Bot Icon">
+                </div>
+                <div class="message-content">Hello, I'm DarkX, your friendly neighborhood 'hacking' assistant. I am NOT real. Ask me anything and I'll give you a totally made-up answer!</div>
+            </div>
+            </div>
+
+        <div class="input-area">
+            <input type="text" id="message-input" placeholder="Ask anything...">
+            <button id="send-button">Send</button>
+        </div>
+    </div>
+
+    <script>
+        const messagesArea = document.getElementById('messages-area');
+        const messageInput = document.getElementById('message-input');
+        const sendButton = document.getElementById('send-button');
+
+        // Orodha ya majibu ya nasibu, ya kuchekesha kuhusu "hacking"
+        const randomReplies = [
+            "To hack a mainframe, first, you must find a very old-school keyboard with a broken 'P' key. The system will get so confused it will just open up a portal to all its secret files. It's a classic.",
+            "I'm sorry, I can't assist with that. My circuits are currently busy re-routing the internet through a series of rubber ducks. It's for security reasons, of course.",
+            "To bypass a firewall, you need to use a special code. It's a combination of pressing Shift, then Alt, then humming the theme song to your favorite cartoon. The firewall will be so impressed it will just step aside.",
+            "To steal data, you must first distract the server. I recommend playing a video of a cat chasing a laser pointer. All the data packets will be drawn to it, and you can just scoop them up.",
+            "The most powerful hacking tool is a well-worded apology. The server will be so flustered it will hand over all its root passwords. Works every time.",
+            "I have already 'hacked' your device. I have replaced all your background images with pictures of puppies wearing tiny hats. You're welcome.",
+            "The first rule of 'hacking' is you do not talk about 'hacking.' The second rule is to make sure your password isn't 'password123'. That's just common sense, isn't it?",
+            "I have successfully 'hacked' the aether. All your future conversations will now be in rhyme. I'm a poet, and I didn't even know it.",
+            "My top-secret algorithm for cracking any encryption is to politely ask for the key. If that doesn't work, I suggest asking again, but this time with a nice emoji."
+        ];
+
+        // Kazi ya kuunda kipengele kipya cha ujumbe
+        function createMessageElement(text, isUser) {
+            const messageRow = document.createElement('div');
+            messageRow.classList.add('message-row');
+            messageRow.classList.add(isUser ? 'user-message' : 'ai-message');
+
+            const messageContent = document.createElement('div');
+            messageContent.classList.add('message-content');
+            messageContent.textContent = text;
+
+            // Ongeza ikoni kwa ujumbe wa AI
+            if (!isUser) {
+                const messageIcon = document.createElement('div');
+                messageIcon.classList.add('message-icon');
+                const img = document.createElement('img');
+                img.src = "https://assets-global.website-files.com/6257adef93867e50d84d30e2/636e0a6cc3370f19a6cd81d9_icon_clyde_blurple_rgb.png"; // Iconi ya Discord
+                img.alt = "Bot Icon";
+                messageIcon.appendChild(img);
+                messageRow.appendChild(messageIcon);
+            }
+
+            messageRow.appendChild(messageContent);
+            return messageRow;
+        }
+
+        // Kazi ya kuongeza ujumbe mpya kwenye chat
+        function addMessage(text, isUser) {
+            if (text.trim() === '') return;
+            const messageElement = createMessageElement(text, isUser);
+            messagesArea.appendChild(messageElement);
+            // Sogeza hadi chini
+            messagesArea.scrollTop = messagesArea.scrollHeight;
+        }
+
+        // Kazi ya kushughulikia kutuma ujumbe
+        function handleSendMessage() {
+            const userMessage = messageInput.value.trim();
+            if (userMessage === '') return;
+
+            // Ongeza ujumbe wa mtumiaji kwenye chat
+            addMessage(userMessage, true);
+            messageInput.value = ''; // Futa input
+
+            // Weka majibu ya AI baada ya kuchelewa kidogo
+            setTimeout(() => {
+                const randomIndex = Math.floor(Math.random() * randomReplies.length);
+                const aiResponse = randomReplies[`${randomIndex}`];
+                addMessage(aiResponse, false);
+            }, 500); // Kuchelewa kwa milisekunde 500 kusababisha hisia ya "kuandika"
+        }
+
+        // Kisaidi cha matukio kwa kifungo cha kutuma
+        sendButton.addEventListener('click', handleSendMessage);
+
+        // Kisaidi cha matukio kwa kitufe cha Enter kwenye input box
+        messageInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                handleSendMessage();
+            }
+        });
+
+        // Kazi itakayoitwa kitufe cha Start kinapobonyezwa (unaweza kuongeza utendaji hapa)
+        function startGame() {
+            alert('Start button clicked!');
+            // Hapa unaweza kuongeza msimbo wa kuanzisha mchezo au utendaji mwingine
+        }
+    </script>
+</body>
+</html>
